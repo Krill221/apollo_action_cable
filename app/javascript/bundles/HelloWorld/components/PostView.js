@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import CommentsListingView from "./CommentsListingView";
 
-const PostView = ( {post} ) => (
+
+const PostView = ({post}) => (
     <div>
       <div>
         Post: {post.title}

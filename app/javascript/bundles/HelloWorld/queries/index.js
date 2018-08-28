@@ -35,7 +35,7 @@ export const createPost = gql`
     }
   }
 `;
-export const postsQuery = gql`
+export const GET_POSTS = gql`
     query retrievePostsQuery {
         posts {
             id
@@ -45,7 +45,7 @@ export const postsQuery = gql`
     }
 `;
 
-export const postsSubscription = gql`
+export const POSTS_SUBSCRIPTION = gql`
     subscription onPostAddedSubscription {
         postAdded {
             id

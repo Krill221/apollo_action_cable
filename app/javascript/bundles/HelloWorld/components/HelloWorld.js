@@ -1,15 +1,17 @@
 import React from 'react';
 import ActionCable from 'actioncable';
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink';
+
 import {HttpLink} from 'apollo-link-http';
 import {split} from 'apollo-link';
+
 import {ApolloClient} from 'apollo-client';
 import {ApolloProvider} from 'react-apollo';
-import {getMainDefinition} from 'apollo-utilities';
 
+import {getMainDefinition} from 'apollo-utilities';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
-
+import PostEditorView from "./PostEditorView";
 import PostsListingView from "./PostsListingView";
 
 
@@ -38,6 +40,9 @@ const client = new ApolloClient({
 export default class HelloWorld extends React.Component {
 
   render() {
-    return <ApolloProvider client={client}><PostsListingView/></ApolloProvider>
+    return <ApolloProvider client={client}>
+      <PostEditorView/>
+      <PostsListingView/>
+    </ApolloProvider>
   }
 }

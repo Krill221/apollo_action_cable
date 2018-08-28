@@ -1,61 +1,34 @@
 import React, {Component} from "react";
-import {graphql} from 'react-apollo';
-import PostEditorView from "./PostEditorView";
-import PostView from "./PostView";
-import {postsQuery, postsSubscription} from '../queries';
+import { Query } from 'react-apollo';
+import PostsPage from "./PostsPage";
+import {GET_POSTS, POSTS_SUBSCRIPTION} from '../queries';
 
-
-const withPostsData = graphql(postsQuery);
-
-class PostsListingView extends Component {
-
-
-    componentWillMount() {
-
-        this.props.data.subscribeToMore({
-            document: postsSubscription,
+const PostsListingView = ({ params }) => (
+  <Query query={GET_POSTS}>
+    {({ subscribeToMore, ...result }) => (
+      <PostsPage {...result}
+        subscribeToNewPosts={() =>
+          subscribeToMore({
+            document: POSTS_SUBSCRIPTION,
             variables: {},
-            updateQuery: (previous, {subscriptionData}) => {
-                if (!subscriptionData.data) {
-                    return previous;
-                }
-
-                const newPost = subscriptionData.data.postAdded;
-
-                if (!previous.posts.find((post) => post.id === newPost.id)) {
-                    return Object.assign({}, previous, {posts: [newPost, ...previous.posts]});
-                } else {
-                    return previous;
-                }
+            updateQuery: (prev, { subscriptionData }) => {
+              if (!subscriptionData.data) return prev;
+              const newPost = subscriptionData.data.postAdded;
+              if (!prev.posts.find((post) => post.id === newPost.id)) {
+                return Object.assign({}, prev,
+                   { posts: [newPost, ...prev.posts]
+                   });
+              } else return prev;
             }
-        });
-    }
-
-    render() {
-        let content = (<div>&nbsp;</div>);
-        let {data} = this.props;
-
-
-        if (data) {
-            if (data.loading) {
-                content = (<div key={'data-loading'}>Data loading! Please wait...</div>);
-            } else if (data.error) {
-                content = (<div key={'error'}>An error occurred. {data.error}</div>);
-            } else if (data.posts) {
-                content = data.posts.map( post => (
-                    <PostView post={post} key={post.id.toString()}/>
-                  )
-                )
-            }
+          })
         }
+      />
+    )}
+  </Query>
+)
 
-        return (
-            <div>
-                <PostEditorView/>
-                {content}
-            </div>
-        );
-    }
-}
 
-export default withPostsData(PostsListingView);
+export default PostsListingView;
+
+//const withPostsData = graphql(GET_POSTS);
+//export default withPostsData(PostsListingView);
