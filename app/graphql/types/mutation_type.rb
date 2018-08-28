@@ -1,10 +1,24 @@
-module Types
-  class MutationType < Types::BaseObject
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World"
-    end
+# frozen_string_literal: true
+
+Types::MutationType = GraphQL::ObjectType.define do
+  name 'Mutation'
+
+  field :createPostAsync, Types::CreatePostAsyncResultType do
+    argument :title, !types.String
+    argument :body, !types.String
+
+    description 'Create a new blog post.'
+
+    resolve Mutations::CreatePostAsync.new
   end
+
+  field :createCommentAsync, Types::CreateCommentAsyncResultType do
+    argument :postId, !types.ID
+    argument :body, !types.String
+
+    description 'Create a new blog comment.'
+
+    resolve Mutations::CreateCommentAsync.new
+  end
+
 end
