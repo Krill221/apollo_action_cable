@@ -11,9 +11,8 @@ Types::QueryType = GraphQL::ObjectType.define do
     resolve Queries::RetrievePost.new
   end
 
-  field :comments, Types::CommentType do
+  field :comments, !types[Types::CommentType] do
     argument :postId, !types.ID
-
     resolve Queries::RetrieveComments.new
   end
 

@@ -13,7 +13,6 @@ import {InMemoryCache} from 'apollo-cache-inmemory';
 import App from './App';
 
 
-
 const cable = ActionCable.createConsumer(`ws://0.0.0.0:3000/subscriptions`);
 let webSocketLink = new ActionCableLink({cable});
 let httpLink = new HttpLink({uri: `http://0.0.0.0:3000/graphql`});
