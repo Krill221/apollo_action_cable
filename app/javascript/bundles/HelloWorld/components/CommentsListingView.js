@@ -1,25 +1,8 @@
 import React, {Component} from "react";
 import {graphql} from 'react-apollo';
-import gql from 'graphql-tag';
+import {commentsQuery, commentsSubscription} from '../queries';
+
 import CommentEditorView from './CommentEditorView';
-
-const commentsQuery = gql`
-    query CommentsForPost($postId: ID!) {
-        comments (postId: $postId) {
-            id
-            body
-        }
-    }
-`;
-
-const commentsSubscription = gql`
-    subscription onCommentAddedSubscription($postId: ID!) {
-        commentAdded (postId: $postId) {
-            id
-            body
-        }
-    }
-`;
 
 
 const withCommentsData = graphql(commentsQuery, {options: ({post}) => ({variables: {postId: post.id}})});

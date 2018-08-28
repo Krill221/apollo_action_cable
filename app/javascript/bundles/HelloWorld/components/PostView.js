@@ -1,27 +1,17 @@
 import React, {Component} from "react";
 import CommentsListingView from "./CommentsListingView";
 
-class PostView extends Component {
-    render() {
-        const {post} = this.props;
-
-        return (
-            <div className="card-holder" key={post.id}>
-                <div className="card">
-                    <div className="card-header">
-                      <h4>{post.title}</h4>
-                    </div>
-                    <div className="card-body">
-                      <div className="">{post.body}</div>
-                      <div className="comments-section">
-                            <h5>Comments</h5>
-                            <CommentsListingView post={post}/>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
+const PostView = ( {post} ) => (
+    <div>
+      <div>
+        Post: {post.title}
+      </div>
+      <div>
+        <div>{post.body}</div>
+        <CommentsListingView post={post}/>
+      </div>
+      <hr />
+    </div>
+)
 
 export default PostView;

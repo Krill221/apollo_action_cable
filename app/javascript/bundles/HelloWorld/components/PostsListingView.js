@@ -1,34 +1,17 @@
 import React, {Component} from "react";
 import {graphql} from 'react-apollo';
-import gql from 'graphql-tag';
 import PostEditorView from "./PostEditorView";
 import PostView from "./PostView";
+import {postsQuery, postsSubscription} from '../queries';
 
-const postsQuery = gql`
-    query retrievePostsQuery {
-        posts {
-            id
-            title
-            body
-        }
-    }
-`;
-
-const postsSubscription = gql`
-    subscription onPostAddedSubscription {
-        postAdded {
-            id
-            title
-            body
-        }
-    }
-`;
 
 const withPostsData = graphql(postsQuery);
 
 class PostsListingView extends Component {
 
+
     componentWillMount() {
+
         this.props.data.subscribeToMore({
             document: postsSubscription,
             variables: {},
@@ -50,13 +33,16 @@ class PostsListingView extends Component {
 
     render() {
         let content = (<div>&nbsp;</div>);
-        if (this.props.data) {
-            if (this.props.data.loading) {
+        let {data} = this.props;
+
+
+        if (data) {
+            if (data.loading) {
                 content = (<div key={'data-loading'}>Data loading! Please wait...</div>);
-            } else if (this.props.data.error) {
-                content = (<div key={'error'}>An error occurred. {this.props.data.error}</div>);
-            } else if (this.props.data.posts) {
-                content = this.props.data.posts.map( post => (
+            } else if (data.error) {
+                content = (<div key={'error'}>An error occurred. {data.error}</div>);
+            } else if (data.posts) {
+                content = data.posts.map( post => (
                     <PostView post={post} key={post.id.toString()}/>
                   )
                 )

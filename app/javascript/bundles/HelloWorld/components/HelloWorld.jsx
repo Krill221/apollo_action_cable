@@ -10,7 +10,8 @@ import {getMainDefinition} from 'apollo-utilities';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 
-import App from './App';
+import PostsListingView from "./PostsListingView";
+
 
 
 const cable = ActionCable.createConsumer(`ws://0.0.0.0:3000/subscriptions`);
@@ -37,6 +38,6 @@ const client = new ApolloClient({
 export default class HelloWorld extends React.Component {
 
   render() {
-    return <ApolloProvider client={client}><App/></ApolloProvider>
+    return <ApolloProvider client={client}><PostsListingView/></ApolloProvider>
   }
 }

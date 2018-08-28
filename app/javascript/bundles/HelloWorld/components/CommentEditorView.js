@@ -1,14 +1,6 @@
 import React, {Component} from "react";
 import {graphql} from 'react-apollo';
-import gql from 'graphql-tag';
-
-const createComment = gql`
-  mutation CreateCommentMutation($postId: ID!, $body: String!) {
-    createCommentAsync(postId: $postId, body: $body) {
-      process_id
-    }
-  }
-`;
+import {createComment} from '../queries';
 
 const withCreateCommentMutation = graphql(createComment);
 
@@ -26,7 +18,6 @@ class CommentEditorView extends Component {
             variables: {postId: this.state.postId, body: this.state.body}
         };
         this.props.mutate(options).then(({data}) => {
-            console.info(data);
             this.setState({body: ''});
         }).catch((error) => {
             console.error('Error with create comment mutation.', error);
