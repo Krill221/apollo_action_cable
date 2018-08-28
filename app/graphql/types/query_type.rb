@@ -1,23 +1,20 @@
 Types::QueryType = GraphQL::ObjectType.define do
-  name "Query"
-  description "The query root of this schema"
+  name 'Query'
 
-  field :post do
-    type Types::PostType
+  field :posts, !types[Types::PostType] do
+    resolve Queries::RetrievePosts.new
+  end
+
+  field :post, Types::PostType do
     argument :id, !types.ID
     description "Find a Post by ID"
     resolve Queries::RetrievePost.new
   end
 
-  field :posts do
-    type types[Types::PostType]
-    resolve Queries::RetrievePosts.new
-  end
-
-  field :comments do
-    type types[Types::CommentType]
+  field :comments, Types::CommentType do
     argument :postId, !types.ID
 
     resolve Queries::RetrieveComments.new
   end
+
 end

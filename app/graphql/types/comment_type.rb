@@ -1,6 +1,9 @@
-module Types
-  class CommentType < Types::BaseObject
-    field :body, String, null: true
-    field :created_at, String, null: true
-  end
+# frozen_string_literal: true
+
+Types::CommentType = GraphQL::ObjectType.define do
+  name 'Comment'
+  
+  field :id, !types.ID
+  field :body, !types.String
+  field :created_at, !types.String
 end

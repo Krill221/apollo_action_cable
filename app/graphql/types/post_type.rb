@@ -1,7 +1,11 @@
-module Types
-  class PostType < Types::BaseObject
-    field :title, String, null: true
-    field :body, String, null: true
-    field :comments, [Types::CommentType], null: true
-  end
+Types::PostType = GraphQL::ObjectType.define do
+
+  name 'Post'
+  description 'A blog post'
+
+  field :id, !types.ID
+  field :title, !types.String
+  field :body, !types.String
+  field :comments, types[!Types::CommentType]
+
 end

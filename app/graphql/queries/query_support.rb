@@ -1,7 +1,9 @@
 module Queries
   class QuerySupport
 
-    abstract_method :resolve
+    MESS = "SYSTEM ERROR: method missing"
+
+    def resolve; raise MESS; end
 
     def call(object, args, context)
       begin

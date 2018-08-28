@@ -60,3 +60,5 @@ gem "graphql", "~> 1.8"
 
 gem 'graphiql-rails', group: :development
 gem "react_on_rails", "~> 11.1"
+
+gem 'mini_racer', platforms: :ruby
