@@ -8,7 +8,7 @@ class GraphqlChannel < ApplicationCable::Channel
   # @param [Object] data
   # @return [Object]
   def execute(data)
-    Rails.logger.info("GraphqlChannel#execute: #{data.inspect}")
+    #Rails.logger.info("GraphqlChannel#execute: #{data.inspect}")
 
     query = data['query']
     variables = ensure_hash(data['variables'])
