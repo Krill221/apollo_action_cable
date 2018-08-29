@@ -9,15 +9,13 @@ const AddPost = () => {
   return (
     <Mutation mutation={ADD_POST} >
       { (addPost) => (
-        <form onSubmit={ e => {
-                e.preventDefault();
-                addPost({ variables: { title: input_title.value, body: input_body.value } });
-              }}
-            >
+        <div>
             <input ref={node => { input_title = node; }} />
             <input ref={node => { input_body = node; }} />
-            <button type="submit">Add Post</button>
-        </form>
+            <button onClick={ () => addPost({ variables: { title: input_title.value, body: input_body.value } }) } >
+              Add Post
+            </button>
+        </div>
       )}
     </Mutation>
   );

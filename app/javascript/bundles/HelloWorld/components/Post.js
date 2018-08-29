@@ -16,5 +16,4 @@ const Post = ({post}) => (
       <hr />
     </div>
 )
-
 export default Post;

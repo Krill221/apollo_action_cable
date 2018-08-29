@@ -9,7 +9,6 @@ const PostsSubscription = () => (
       <PostsList {...result} subscribeToNewItems={() =>
           subscribeToMore({
             document: POSTS_SUBSCRIPTION,
-            variables: {},
             updateQuery: (prev, { subscriptionData }) => {
               if (!subscriptionData.data) return prev;
               const newItem = subscriptionData.data.postAdded;
