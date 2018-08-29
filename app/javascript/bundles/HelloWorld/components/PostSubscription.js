@@ -1,24 +1,21 @@
 import React, {Component} from "react";
-import { Query } from 'react-apollo';
+import { Subscription } from 'react-apollo';
 import Post from "./Post";
 import {GET_POST, UPDATE_POSTS_SUBSCRIPTION} from '../queries';
+import AddComment from './AddComment';
+import UpdatePost from './UpdatePost';
+import CommentsSubscription from "./CommentsSubscription";
 
-const PostSubscription = ({ post }) => {
-  return <Query query={GET_POST} variables={{id: post.id}} >
-    { ({ subscribeToMore, ...result }) => (
-      <Post {...result} subscribeToNewItem={() =>
-          subscribeToMore({
-            document: UPDATE_POSTS_SUBSCRIPTION,
-            variables: {id: post.id},
-            updateQuery: (prev, { subscriptionData }) => {
-              if (!subscriptionData.data) return prev;
-              const postUpdated = subscriptionData.data.postUpdated;
-              return Object.assign({}, prev, { post: postUpdated });
-            }
-          })
-        }
-      />
-    )}
-  </Query>
-}
+const PostSubscription = ({ post }) => (
+  <div>
+    <Subscription subscription={UPDATE_POSTS_SUBSCRIPTION} variables={{ id: post.id }} >
+      { ({ data, loading }) => {
+        return <Post post={loading? post : data.postUpdated} />
+      }}
+    </Subscription>
+    <UpdatePost post={post}/>
+    <AddComment post={post}/>
+    <CommentsSubscription post={post}/>
+  </div>
+);
 export default PostSubscription

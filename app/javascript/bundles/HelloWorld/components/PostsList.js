@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import PostSubscription from "./PostSubscription0";
+import PostSubscription from "./PostSubscription";
 
 
 export default class PostsList extends Component {
