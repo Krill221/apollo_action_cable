@@ -35,6 +35,13 @@ export const ADD_POST = gql`
     }
   }
 `;
+export const UPDATE_POST = gql`
+  mutation UpdatePostMutation($id: String!, $title: String!, $body: String!) {
+    updatePostAsync(id: $id, title: $title, body: $body) {
+      process_id
+    }
+  }
+`;
 export const GET_POSTS = gql`
     query retrievePostsQuery {
         posts {
@@ -45,9 +52,29 @@ export const GET_POSTS = gql`
     }
 `;
 
-export const POSTS_SUBSCRIPTION = gql`
+export const ADD_POSTS_SUBSCRIPTION = gql`
     subscription onPostAddedSubscription {
         postAdded {
+            id
+            title
+            body
+        }
+    }
+`;
+
+export const GET_POST = gql`
+    query retrievePostQuery($id: ID!) {
+        post(id: $id) {
+            id
+            title
+            body
+        }
+    }
+`;
+
+export const UPDATE_POSTS_SUBSCRIPTION= gql`
+    subscription onPostUpdatedSubscription($id: ID!) {
+        postUpdated (id: $id) {
             id
             title
             body

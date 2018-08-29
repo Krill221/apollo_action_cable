@@ -1,19 +1,9 @@
-import React, {Component} from "react";
-import AddComment from './AddComment';
-import CommentsSubscription from "./CommentsSubscription";
+import React from "react";
 
-
-const Post = ({post}) => (
-    <div>
-      <div>
-        Post: {post.title}
-      </div>
-      <div>
-        <div>{post.body}</div>
-        <AddComment post={post}/>
-        <CommentsSubscription post={post}/>
-      </div>
-      <hr />
-    </div>
-)
-export default Post;
+const Post = ({ post }) => (
+  <div>
+    <div>{post.title}</div>
+    <div>{post.body}</div>
+  </div>
+);
+export default Post

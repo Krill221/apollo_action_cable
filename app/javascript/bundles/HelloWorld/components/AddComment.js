@@ -4,7 +4,7 @@ import {ADD_COMMENT} from '../queries';
 
 const AddComment = ({post}) => {
   let input_body;
-  
+
   return (
     <Mutation mutation={ADD_COMMENT} >
       { (addComment) => (

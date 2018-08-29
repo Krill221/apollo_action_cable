@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 export default class CommentsList extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.subscribeToNewItems();
   }
   render() {

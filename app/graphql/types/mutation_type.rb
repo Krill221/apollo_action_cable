@@ -12,6 +12,16 @@ Types::MutationType = GraphQL::ObjectType.define do
     resolve Mutations::CreatePostAsync.new
   end
 
+  field :updatePostAsync, Types::UpdatePostAsyncResultType do
+    argument :id, !types.String
+    argument :title, !types.String
+    argument :body, !types.String
+
+    description 'Update post.'
+
+    resolve Mutations::UpdatePostAsync.new
+  end
+
   field :createCommentAsync, Types::CreateCommentAsyncResultType do
     argument :postId, !types.ID
     argument :body, !types.String

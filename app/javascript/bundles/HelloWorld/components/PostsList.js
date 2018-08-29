@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import Post from "./Post";
+import PostSubscription from "./PostSubscription0";
 
 
 export default class PostsList extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.subscribeToNewItems();
   }
   render() {
@@ -13,7 +13,7 @@ export default class PostsList extends Component {
             {data.loading && <div>Loading...</div>}
             {data.error && <div>Error {data.error}</div>}
             {data.posts && data.posts.map( post => (
-               <Post post={post} key={post.id.toString()} />
+               <PostSubscription post={post} key={post.id.toString()} />
               ) )}
           </div>
         );
