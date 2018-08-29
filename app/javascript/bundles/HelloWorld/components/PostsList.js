@@ -1,20 +1,19 @@
 import React, {Component} from "react";
-import PostView from "./PostView";
+import Post from "./Post";
 
 
-export default class PostsListingView extends Component {
+export default class PostsList extends Component {
   componentDidMount() {
-    this.props.subscribeToNewPosts();
+    this.props.subscribeToNewItems();
   }
   render() {
-        let content = (<div>&nbsp;</div>);
         let {data} = this.props;
         return (
           <div>
             {data.loading && <div>Loading...</div>}
             {data.error && <div>Error {data.error}</div>}
             {data.posts && data.posts.map( post => (
-               <PostView post={post} key={post.id.toString()} />
+               <Post post={post} key={post.id.toString()} />
               ) )}
           </div>
         );

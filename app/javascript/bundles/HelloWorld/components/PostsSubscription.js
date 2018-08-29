@@ -1,21 +1,21 @@
 import React, {Component} from "react";
 import { Query } from 'react-apollo';
-import PostsListingView from "./PostsListingView";
+import PostsList from "./PostsList";
 import {GET_POSTS, POSTS_SUBSCRIPTION} from '../queries';
 
-const PostsPage = ({ params }) => (
+const PostsSubscription = () => (
   <Query query={GET_POSTS}>
     { ({ subscribeToMore, ...result }) => (
-      <PostsListingView {...result} subscribeToNewPosts={() =>
+      <PostsList {...result} subscribeToNewItems={() =>
           subscribeToMore({
             document: POSTS_SUBSCRIPTION,
             variables: {},
             updateQuery: (prev, { subscriptionData }) => {
               if (!subscriptionData.data) return prev;
-              const newPost = subscriptionData.data.postAdded;
-              if (!prev.posts.find((post) => post.id === newPost.id)) {
+              const newItem = subscriptionData.data.postAdded;
+              if (!prev.posts.find((post) => post.id === newItem.id)) {
                 return Object.assign({}, prev,
-                   { posts: [newPost, ...prev.posts]
+                   { posts: [newItem, ...prev.posts]
                    });
               } else return prev;
             }
@@ -25,4 +25,4 @@ const PostsPage = ({ params }) => (
     )}
   </Query>
 )
-export default PostsPage
+export default PostsSubscription

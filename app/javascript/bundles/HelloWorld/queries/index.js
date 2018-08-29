@@ -1,6 +1,14 @@
 import gql from "graphql-tag";
 
-export const commentsQuery = gql`
+export const ADD_COMMENT = gql`
+  mutation CreateCommentMutation($postId: ID!, $body: String!) {
+    createCommentAsync(postId: $postId, body: $body) {
+      process_id
+    }
+  }
+`;
+
+export const GET_COMMENTS = gql`
     query CommentsForPost($postId: ID!) {
         comments (postId: $postId) {
             id
@@ -9,7 +17,7 @@ export const commentsQuery = gql`
     }
 `;
 
-export const commentsSubscription = gql`
+export const COMMENTS_SUBSCRIPTION = gql`
     subscription onCommentAddedSubscription($postId: ID!) {
         commentAdded (postId: $postId) {
             id
@@ -18,17 +26,9 @@ export const commentsSubscription = gql`
     }
 `;
 
-export const createComment = gql`
-  mutation CreateCommentMutation($postId: ID!, $body: String!) {
-    createCommentAsync(postId: $postId, body: $body) {
-      process_id
-    }
-  }
-`;
-
 //------------------------------------------------------------------
 
-export const createPost = gql`
+export const ADD_POST = gql`
   mutation CreatePostMutation($title: String!, $body: String!) {
     createPostAsync(title: $title, body: $body) {
       process_id
