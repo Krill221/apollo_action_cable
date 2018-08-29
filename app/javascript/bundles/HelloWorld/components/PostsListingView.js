@@ -1,34 +1,22 @@
 import React, {Component} from "react";
-import { Query } from 'react-apollo';
-import PostsPage from "./PostsPage";
-import {GET_POSTS, POSTS_SUBSCRIPTION} from '../queries';
-
-const PostsListingView = ({ params }) => (
-  <Query query={GET_POSTS}>
-    {({ subscribeToMore, ...result }) => (
-      <PostsPage {...result}
-        subscribeToNewPosts={() =>
-          subscribeToMore({
-            document: POSTS_SUBSCRIPTION,
-            variables: {},
-            updateQuery: (prev, { subscriptionData }) => {
-              if (!subscriptionData.data) return prev;
-              const newPost = subscriptionData.data.postAdded;
-              if (!prev.posts.find((post) => post.id === newPost.id)) {
-                return Object.assign({}, prev,
-                   { posts: [newPost, ...prev.posts]
-                   });
-              } else return prev;
-            }
-          })
-        }
-      />
-    )}
-  </Query>
-)
+import PostView from "./PostView";
 
 
-export default PostsListingView;
-
-//const withPostsData = graphql(GET_POSTS);
-//export default withPostsData(PostsListingView);
+export default class PostsListingView extends Component {
+  componentDidMount() {
+    this.props.subscribeToNewPosts();
+  }
+  render() {
+        let content = (<div>&nbsp;</div>);
+        let {data} = this.props;
+        return (
+          <div>
+            {data.loading && <div>Loading...</div>}
+            {data.error && <div>Error {data.error}</div>}
+            {data.posts && data.posts.map( post => (
+               <PostView post={post} key={post.id.toString()} />
+              ) )}
+          </div>
+        );
+  }
+}

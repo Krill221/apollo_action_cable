@@ -12,7 +12,7 @@ import {getMainDefinition} from 'apollo-utilities';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
 import PostEditorView from "./PostEditorView";
-import PostsListingView from "./PostsListingView";
+import PostsPage from "./PostsPage";
 
 
 
@@ -42,7 +42,7 @@ export default class HelloWorld extends React.Component {
   render() {
     return <ApolloProvider client={client}>
       <PostEditorView/>
-      <PostsListingView/>
+      <PostsPage/>
     </ApolloProvider>
   }
 }
